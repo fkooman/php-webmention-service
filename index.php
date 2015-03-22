@@ -20,6 +20,8 @@ require_once 'vendor/autoload.php';
 use fkooman\Ini\IniReader;
 use fkooman\WebMention\WebMentionService;
 use GuzzleHttp\Client;
+use fkooman\WebMention\Plugin\MailPlugin;
+use fkooman\WebMention\Plugin\LogPlugin;
 
 try {
     $iniReader = IniReader::fromFile(
@@ -39,6 +41,18 @@ try {
     );
 
     $service = new WebMentionService($client);
+
+    $service->registerPlugin(
+        new MailPlugin(
+            'fkooman@tuxed.net',
+            'fkooman@tuxed.net'
+        )
+    );
+
+    $service->registerPlugin(
+        new LogPlugin()
+    );
+
     $service->run()->sendResponse();
 } catch (Exception $e) {
     error_log(

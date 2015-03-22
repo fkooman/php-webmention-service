@@ -5,6 +5,7 @@ successful webmentions.
 # Plugins
 Currently there are no plugins, but the following are planned:
 
-* mail (send a mail on a successful webmention)
-* html (add to HTML (add a webmention to an existing (static) HTML page)
+* Mail (send a mail on a successful webmention)
+* Log (add an entry of the webmention to the log using `error_log`)
+* HTML (not entirly sure yet...)
 

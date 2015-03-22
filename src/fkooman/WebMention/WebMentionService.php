@@ -16,6 +16,9 @@ class WebMentionService extends Service
     /** @var GuzzleHttp\Client */
     private $client;
 
+    /** @var array */
+    private $plugins;
+
     public function __construct(Client $client = null)
     {
         parent::__construct();
@@ -24,13 +27,19 @@ class WebMentionService extends Service
             $client = new Client();
         }
         $this->client = $client;
-
+        $this->plugins = array();
+    
         $this->post(
             '/',
             function (Request $request) {
                 return $this->handlePost($request);
             }
         );
+    }
+
+    public function registerPlugin(PluginInterface $plugin)
+    {
+        $this->plugins[] = $plugin;
     }
 
     public function handlePost(Request $request)
@@ -52,6 +61,10 @@ class WebMentionService extends Service
 
         if (!$this->hasTarget($source, $target)) {
             throw new BadRequestException('target link not found on source');
+        }
+
+        foreach ($this->plugins as $plugin) {
+            $plugin->execute($source, $target);
         }
 
         $response = new JsonResponse();
