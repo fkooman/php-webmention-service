@@ -1,8 +1,8 @@
 <?php
 
-namespace fkooman\WebMention\Plugin;
+namespace fkooman\Webmention\Plugin;
 
-use fkooman\WebMention\PluginInterface;
+use fkooman\Webmention\PluginInterface;
 
 class LogPlugin implements PluginInterface
 {

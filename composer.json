@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-0": {
-            "fkooman\\WebMention": "src/"
+            "fkooman\\Webmention": "src/"
         }
     },
     "description": "Webmention Service",

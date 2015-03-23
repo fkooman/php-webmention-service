@@ -1,6 +1,6 @@
 <?php
 
-namespace fkooman\WebMention;
+namespace fkooman\Webmention;
 
 interface PluginInterface
 {

@@ -3,6 +3,10 @@
 ; YOU HAVE BEEN WARNED!!!
 ;disableServerCertCheck = true
 
+[Log]
+enabled = true
+
 [Mail]
+enabled = false
 from = info@example.org
 to = info@example.org

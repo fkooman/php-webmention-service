@@ -18,10 +18,10 @@
 require_once 'vendor/autoload.php';
 
 use fkooman\Ini\IniReader;
-use fkooman\WebMention\WebMentionService;
+use fkooman\Webmention\WebmentionService;
 use GuzzleHttp\Client;
-use fkooman\WebMention\Plugin\MailPlugin;
-use fkooman\WebMention\Plugin\LogPlugin;
+use fkooman\Webmention\Plugin\MailPlugin;
+use fkooman\Webmention\Plugin\LogPlugin;
 
 try {
     $iniReader = IniReader::fromFile(
@@ -40,23 +40,30 @@ try {
         )
     );
 
-    $service = new WebMentionService($client);
+    $service = new WebmentionService($client);
 
-    $service->registerPlugin(
-        new MailPlugin(
-            $iniReader->v('Mail', 'from'),
-            $iniReader->v('Mail', 'to')
-        )
-    );
+    var_dump($iniReader->v('Mail'));
 
-    $service->registerPlugin(
-        new LogPlugin()
-    );
+    // FIXME: write a dynamic plugin loader without mentioning them all here...
+    if ($iniReader->v('Mail', 'enabled')) {
+        $service->registerPlugin(
+            new MailPlugin(
+                $iniReader->v('Mail', 'from'),
+                $iniReader->v('Mail', 'to')
+            )
+        );
+    }
+
+    if ($iniReader->v('Log', 'enabled')) {
+        $service->registerPlugin(
+            new LogPlugin()
+        );
+    }
 
     $service->run()->sendResponse();
 } catch (Exception $e) {
     error_log(
         $e->getMessage()
     );
-    WebMentionService::handleException($e)->sendResponse();
+    WebmentionService::handleException($e)->sendResponse();
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace fkooman\WebMention\Plugin;
+namespace fkooman\Webmention\Plugin;
 
 use Swift_Message;
 use Swift_MailTransport;
 use Swift_Mailer;
-use fkooman\WebMention\PluginInterface;
+use fkooman\Webmention\PluginInterface;
 
 class MailPlugin implements PluginInterface
 {
