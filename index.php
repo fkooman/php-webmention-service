@@ -42,8 +42,6 @@ try {
 
     $service = new WebmentionService($client);
 
-    var_dump($iniReader->v('Mail'));
-
     // FIXME: write a dynamic plugin loader without mentioning them all here...
     if ($iniReader->v('Mail', 'enabled')) {
         $service->registerPlugin(
