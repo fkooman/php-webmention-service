@@ -44,8 +44,8 @@ try {
 
     $service->registerPlugin(
         new MailPlugin(
-            'fkooman@tuxed.net',
-            'fkooman@tuxed.net'
+            $iniReader->v('Mail', 'from'),
+            $iniReader->v('Mail', 'to')
         )
     );
 

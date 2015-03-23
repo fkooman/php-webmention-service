@@ -23,12 +23,9 @@ class MailPlugin implements PluginInterface
 
     public function execute($source, $target)
     {
-        //$transport = Swift_SendmailTransport::newInstance();
         $transport = Swift_MailTransport::newInstance();
-
         $mailer = Swift_Mailer::newInstance($transport);
-            
-        $message = Swift_Message::newInstance('You have been webmentioned!');
+        $message = Swift_Message::newInstance('Webmention Received');
         $message->setFrom($this->from);
         $message->setTo($this->to);
         $message->setBody(

@@ -2,3 +2,7 @@
 ; THIS IS ONLY FOR DEVELOPMENT PURPOSES. DO NOT DISABLE THIS FOR DEPLOYMENT 
 ; YOU HAVE BEEN WARNED!!!
 ;disableServerCertCheck = true
+
+[Mail]
+from = info@example.org
+to = info@example.org
