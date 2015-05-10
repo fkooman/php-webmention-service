@@ -22,6 +22,8 @@ use fkooman\Webmention\WebmentionService;
 use GuzzleHttp\Client;
 use fkooman\Webmention\Plugin\MailPlugin;
 use fkooman\Webmention\Plugin\LogPlugin;
+use fkooman\Webmention\Plugin\PhubblePlugin;
+use fkooman\Webmention\Plugin\PhubbleStorage;
 
 try {
     $iniReader = IniReader::fromFile(
@@ -58,10 +60,19 @@ try {
         );
     }
 
+    if ($iniReader->v('Phubble', 'enabled')) {
+        $pdo = new PDO(
+            $iniReader->v('Phubble', 'dsn'),
+            $iniReader->v('Phubble', 'username', false),
+            $iniReader->v('Phubble', 'password', false)
+        );
+        $phubbleStorage = new PhubbleStorage($pdo);
+        $service->registerPlugin(
+            new PhubblePlugin($phubbleStorage)
+        );
+    }
+
     $service->run()->sendResponse();
 } catch (Exception $e) {
-    error_log(
-        $e->getMessage()
-    );
     WebmentionService::handleException($e)->sendResponse();
 }
